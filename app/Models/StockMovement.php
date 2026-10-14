@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StockMovement extends Model
 {
@@ -22,4 +23,20 @@ class StockMovement extends Model
     protected $casts = [
         'quantity' => 'integer',
     ];
+
+    /**
+     * Relationship: Transaksi pergerakan stok milik satu Produk.
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    /**
+     * Relationship: Transaksi pergerakan stok terhubung ke Supplier (nullable).
+     */
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
 }
